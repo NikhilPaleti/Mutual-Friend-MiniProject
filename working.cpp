@@ -250,7 +250,7 @@ void commonfriend(int s, int d , int relation[])
      int a ,b ;
      char ch='y';
 
-        for(int i=0;i<16;i++){
+        for(int i=0;i<net.size();i++){
                 a=net[i].first; b=net[i].second;
         connection2[a-1][b-1]=connection2[b-1][a-1]=1;
         connection[a].push_back(b);
