@@ -27,7 +27,7 @@ const char msgWelcome[] =
              "\t              *                                                     *\n\r"
              "\t              ******************************************************";
              cout<< msgWelcome;
-system("intro.vbs");
+//system("intro.vbs");
              getch();
              system("cls");
 }
@@ -241,8 +241,8 @@ void commonfriend(int s, int d , int relation[])
      int connection2[users][users];
      memset(connection2, 0, sizeof(connection2));
 
-     char names[15][10]={"pairsh","rohit","aman","nikhil","divyansh","navi","aniket","shagun","sanskar","Apeeksha"};
-     vector<pair<int,int>> net={{1,2},{1,3},{1,6},{2,4},{2,6},{3,5},{4,8},{5,8},{6,10},{7,10},{8,9},{10,9}};
+     char names[15][10]={"Pairsh","Rohit","Aman","Nikhil","Divyansh","Navi","Aniket","Shagun","Sanskar","Vikas"};
+     vector<pair<int,int>> net={{1,2},{1,3},{1,6},{2,4},{2,6},{3,5},{3,10},{4,7},{4,8},{4,9},{5,6},{5,8},{6,10},{7,10},{8,9},{10,9}};
      for(int i=0;i<users;i++)
      {
         account[i]=new user(names[i]);
@@ -250,7 +250,7 @@ void commonfriend(int s, int d , int relation[])
      int a ,b ;
      char ch='y';
 
-        for(int i=0;i<12;i++){
+        for(int i=0;i<16;i++){
                 a=net[i].first; b=net[i].second;
         connection2[a-1][b-1]=connection2[b-1][a-1]=1;
         connection[a].push_back(b);
@@ -310,7 +310,7 @@ case 4: cout<<"\n Enter the user id ";
 cin>>a;
 memset(rel, 0, sizeof(rel));
 account[a-1]->level_one(rel);
-for(int i=1; i<=users-1;i++)
+for(int i=1; i<=users;i++)
     {if(rel[i]){
         cout<<i<<" "<<account[i-1]->retname()<< "\n";
 
@@ -335,6 +335,7 @@ srand(time(0));
 }
 
 }
+getch();
 return 0;
  }
 
