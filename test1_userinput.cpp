@@ -1,64 +1,8 @@
 #include <bits/stdc++.h>
-#include <windows.h>
-#include <conio.h>
 using namespace std;
+int users = 10;
+#define m 10
 
-#define users 10
-
-//Intoduction of all
-void intro()
-{
-    cout << "Press enter when everyone is ready ";
-    getch();
-    system("cls");
-
-    const char msgWelcome[] =
-        "\t              *******************************************************\n\r"
-        "\t              *                                                     *\n\r"
-        "\t              *        Welcome to Social Network Project            *\n\r"
-        "\t              *                                                     *\n\r"
-        "\t              *******************************************************\n\r"
-        "\t              *                                                     *\n\r"
-        "\t              *                                                     *\n\r"
-        "\t              *        Team Members : Aman Bhadouria                *\n\r"
-        "\t              *                       Parish Bindal                 *\n\r"
-        "\t              *                       Nikhil Paleti                 *\n\r"
-        "\t              *                       Naivedya khare                *\n\r"
-        "\t              *                                                     *\n\r"
-        "\t              ******************************************************";
-    cout << msgWelcome;
-    system("intro.vbs");
-    getch();
-    system("cls");
-}
-void image()
-{
-    system("photo.png");
-}
-void red()
-{
-    HANDLE hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 4);
-}
-void white()
-{
-    HANDLE hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 7);
-}
-void t2s(char *x)
-{
-    ofstream batch;
-    batch.open("working.vbs", ios::out);
-    batch << "'\n";
-    batch << "set speech = Wscript.CreateObject(\"SAPI.spVoice\") \n";
-    batch << "Set speech.Voice = speech.GetVoices.Item(1)\n";
-    batch << "speech.speak\"" << x << "\" ";
-    batch.close();
-
-    system("working.vbs");
-}
 vector<int> connection[20];
 
 int user_in = 0;
@@ -70,11 +14,11 @@ class user
     int Nfriends;
 
 public:
-    user(char *names)
+    user()
     {
         user_in++;
-
-        strcpy(name, names);
+        cout << "enter user name for user id " << user_in << " ";
+        cin >> name;
         uid = user_in;
     }
     void level_friend(int relation[])
@@ -115,7 +59,6 @@ public:
 
         return;
     }
-
     char *retname()
     {
         return name;
@@ -143,22 +86,8 @@ void printcnt()
         cout << endl;
     }
 }
-void printmatrix(int mat[][users])
-{
-    cout << "\nABOVE RELATION WILL LOOK LIKE IN FORM OF MATRIX\n";
-    cout << "   ";
-    for (int i = 0; i < users; i++)
-        cout << i + 1 << " ";
-    for (int i = 0; i < users; i++)
-    {
-        cout << "\n";
-        cout << i + 1 << "  ";
-        for (int j = 0; j < users; j++)
-            cout << mat[i][j] << " ";
-        ;
-    }
-}
-void minimumrelation(int mat[][users])
+
+void minimumrelation(int mat[][m])
 {
     int rell[users][users];
     for (int i = 0; i < users; i++)
@@ -187,7 +116,18 @@ void minimumrelation(int mat[][users])
             }
         }
     }
-    printmatrix(rell);
+    cout << "\nABOVE RELATION WILL LOOK LIKE IN FORM OF MATRIX\n";
+    cout << "   ";
+    for (int i = 0; i < users; i++)
+        cout << i + 1 << " ";
+    for (int i = 0; i < users; i++)
+    {
+        cout << "\n";
+        cout << i + 1 << "  ";
+        for (int j = 0; j < users; j++)
+            cout << rell[i][j] << " ";
+        ;
+    }
 }
 
 void printAllPathsUtil(int u, int d, bool visited[],
@@ -240,62 +180,59 @@ void commonfriend(int s, int d, int relation[])
 
 int main()
 {
-    int z;
-    srand(time(0));
-    z = rand() % 7 + 1;
-
-    intro();
-
     user *account[users];
-    cout << "the no of user in network =" << users << "\n";
-    int connection2[users][users];
+    cout << "Enter the no of user in network \n";
+    cin >> users;
+    int connection2[m][m];
     memset(connection2, 0, sizeof(connection2));
 
-    char names[15][10] = {"pairsh", "rohit", "aman", "nikhil", "divyansh", "navi", "aniket", "shagun", "sanskar", "Apeeksha"};
-    vector<pair<int, int>> net = {{1, 2}, {1, 3}, {1, 6}, {2, 4}, {2, 6}, {3, 5}, {4, 8}, {5, 8}, {6, 10}, {7, 10}, {8, 9}, {10, 9}};
     for (int i = 0; i < users; i++)
     {
-        account[i] = new user(names[i]);
+        account[i] = new user;
     }
     int a, b;
     char ch = 'y';
-
-    for (int i = 0; i < 12; i++)
+    cout << "enter the connection list ,as  user id A  user id B  and Y/n for add more\n";
+    while (ch == 'y' || ch == 'Y')
     {
-        a = net[i].first;
-        b = net[i].second;
+        cout << "ADD connection  ";
+        cin >> a >> b >> ch;
         connection2[a - 1][b - 1] = connection2[b - 1][a - 1] = 1;
         connection[a].push_back(b);
         connection[b].push_back(a);
     }
-    printcnt();
-    printmatrix(connection2);
 
-    //cout<<account[a-1]->retname()<<" "<<account[a-1]->retuid()<<"\n ";
+    printcnt();
+    cout << "\nABOVE RELATION WILL LOOK LIKE IN FORM OF MATRIX\n";
+    cout << "   ";
+    for (int i = 0; i < users; i++)
+        cout << i + 1 << " ";
+    for (int i = 0; i < users; i++)
+    {
+        cout << "\n";
+        cout << i + 1 << "  ";
+        for (int j = 0; j < users; j++)
+            cout << connection2[i][j] << " ";
+        ;
+    }
 
     int c;
     while (1)
     {
-        cout << "\nEnter your choice\n";
+        cout << "\nenter your choice\n";
         cout << "1.To obtain all level for friend connection\n";
-        cout << "2.To Find all the mutual friends between two people in the network";
-        red();
-        cout << "(SAPI (text 2 speech) Enabled)\n";
-        white();
+        cout << "2.To Find all the mutual friends between two people in the network\n";
         cout << "3.To Find the connection links between two people in the network\n";
-        cout << "4.To Find the friends of a person in the network";
-        red();
-        cout << "(SAPI (text 2 speech) Enabled)\n";
-        white();
+        cout << "4.To Find the friends of a person in the network\n";
         cout << "5.To Find minimum relation matrix\n";
-        cout << "6. Open the graph depicting the above relations\n";
-        cout << "7.EXIT\n";
+        cout << "6.EXIT\n";
         cin >> c;
-        char Q[20];
+
         switch (c)
         {
 
         case 1:
+        {
             cout << "\n Enter the user id to obtain all level for friend connection ";
             cin >> a;
             int rel[users];
@@ -305,57 +242,56 @@ int main()
                 cout << i << " " << account[i - 1]->retname() << " --> " << rel[i] << "\n";
             }
             break;
+        }
         case 2:
+        {
             cout << "enter the uid of users \n";
             cin >> a >> b;
+            int rel[users];
             memset(rel, 0, sizeof(rel));
             commonfriend(a, b, rel);
             for (int i = 1; i <= users - 1; i++)
             {
                 if (rel[i])
-                {
                     cout << i << " " << account[i - 1]->retname() << "\n";
-
-                    t2s(account[i - 1]->retname());
-                }
             }
 
             break;
+        }
         case 3:
+        {
             cout << "enter the uid of users \n";
             cin >> a >> b;
             printAllPaths(a, b);
             break;
+        }
         case 4:
+        {
             cout << "\n Enter the user id ";
             cin >> a;
+            int rel[users];
             memset(rel, 0, sizeof(rel));
             account[a - 1]->level_one(rel);
             for (int i = 1; i <= users - 1; i++)
             {
                 if (rel[i])
-                {
                     cout << i << " " << account[i - 1]->retname() << "\n";
-
-                    t2s(account[i - 1]->retname());
-                }
             }
             break;
+        }
         case 5:
+        {
             minimumrelation(connection2);
             break;
-        case 6:
-            image();
-            break;
-        case 7:
-            exit(1);
-        default:
-        {
-            cout << "\nInvalid type! Did u mean option " << z << "?\n";
-            srand(time(0));
-            z = rand() % 7 + 1;
         }
+        case 6:
+        {
+            exit(1);
+        }
+        default:
+            cout << "\nInvalid type! \n";
         }
     }
+
     return 0;
 }
